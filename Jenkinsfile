@@ -2,16 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+
+        stage('Checkout') {
             steps {
-                echo 'Building...'
+                git 'https://github.com/SaranyaDevi2005/helpdesk-devops.git'
             }
         }
 
-        stage('Run') {
+        stage('Build Frontend') {
             steps {
-                echo 'Running...'
+                dir('frontend') {
+                    bat 'docker build -t frontend-app:latest .'
+                }
             }
         }
+
     }
 }
