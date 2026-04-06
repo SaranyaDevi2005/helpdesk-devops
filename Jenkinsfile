@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    # test jenkins trigger
+    
     stages {
         stage('Clone') {
             steps {
