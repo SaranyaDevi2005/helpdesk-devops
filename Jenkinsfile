@@ -1,22 +1,16 @@
 pipeline {
     agent any
-    
-    stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/SaranyaDevi2005/helpdesk-devops.git'
-            }
-        }
 
+    stages {
         stage('Build') {
             steps {
-                sh 'docker-compose build'
+                echo 'Building...'
             }
         }
 
         stage('Run') {
             steps {
-                sh 'docker-compose up -d'
+                echo 'Running...'
             }
         }
     }
