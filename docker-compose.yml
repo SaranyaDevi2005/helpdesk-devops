@@ -1,0 +1,61 @@
+services:
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  auth_service:
+    build: ./backend/services/auth_service
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend/services/auth_service:/app
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+
+  ticket_service:
+    build: ./backend/services/ticket_service
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./backend/services/ticket_service:/app
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+
+  comment_service:
+    build: ./backend/services/comment_service
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./backend/services/comment_service:/app
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - auth_service
+      - ticket_service
+      - comment_service
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+
+volumes:
+  mongo_data:
