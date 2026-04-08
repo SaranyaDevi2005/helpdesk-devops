@@ -56,6 +56,9 @@ services:
     environment:
       - HOST=0.0.0.0
       - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_AUTH_API=http://localhost:8001
+      - REACT_APP_TICKET_API=http://localhost:8002
+      - REACT_APP_COMMENT_API=http://localhost:8003
 
 volumes:
   mongo_data:
