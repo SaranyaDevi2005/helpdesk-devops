@@ -5,3 +5,4 @@ python-dotenv
 bcrypt
 pydantic
 email-validator
+python-jose[cryptography]

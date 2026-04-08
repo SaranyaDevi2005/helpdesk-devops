@@ -15,8 +15,8 @@ services:
       - ./backend/services/auth_service:/app
     depends_on:
       - mongo
-    environment:
-      - MONGO_URL=mongodb://mongo:27017
+    env_file:
+      - .env  
 
   ticket_service:
     build: ./backend/services/ticket_service
@@ -26,10 +26,8 @@ services:
       - ./backend/services/ticket_service:/app
     depends_on:
       - mongo
-    environment:
-      - MONGO_URL=mongodb://mongo:27017
-      - EMAIL_USER=${EMAIL_USER}
-      - EMAIL_PASS=${EMAIL_PASS}
+    env_file:
+      - .env  
 
   comment_service:
     build: ./backend/services/comment_service
@@ -39,8 +37,8 @@ services:
       - ./backend/services/comment_service:/app
     depends_on:
       - mongo
-    environment:
-      - MONGO_URL=mongodb://mongo:27017
+    env_file:
+      - .env  
 
   frontend:
     build: ./frontend

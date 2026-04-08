@@ -241,6 +241,7 @@ export default function App() {
         username: form.username,
         password: form.password,
       });
+      localStorage.setItem("token", res.data.access_token);
       setUser(res.data);
       setPage("dashboard");
       loadTickets(res.data);
@@ -255,7 +256,13 @@ export default function App() {
     const url = u.user_type === "admin"
       ? `${TICKET_API}/tickets`
       : `${TICKET_API}/tickets/${u.username}`;
-    const res = await axios.get(url);
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+});
     setTickets(res.data);
   };
 
